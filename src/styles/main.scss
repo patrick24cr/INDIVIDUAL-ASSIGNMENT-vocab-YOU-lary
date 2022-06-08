@@ -3,8 +3,30 @@
 
 
 body {
-  background-color: antiquewhite;
-  color: brown;
+  background-color: rgb(46, 51, 57);
+  margin-top: 0px;
+}
+
+.google-auth {
+  margin: 0px 10px 0px 20px;
+}
+
+.logo {
+  margin: 0px 10px 0px 20px;
+}
+
+.words {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.card {
   text-align: center;
-  margin-top: 100px;
+  margin: 10px;
+  flex-shrink: 0;
+}
+
+.card-buttons {
+  // position: absolute;
+  // bottom: 0;
 }
