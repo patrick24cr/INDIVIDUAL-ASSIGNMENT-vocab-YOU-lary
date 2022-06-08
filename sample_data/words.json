@@ -1,0 +1,26 @@
+{
+  "-MiBv9_aOEJQWoobjz_U" : {
+    "firebaseKey" : "-MiBv9_aOEJQWoobjz_U",
+    "title" : "JSON",
+    "category" : "Web",
+    "description": "JSON is a data format derived from javascript objects. I'm sure there's a better explanation but that's the only one that comes to me right now while making up this description.",
+    "date" : 1652134873,
+    "uid": ""
+  },
+  "-MiBvQiWr6XNwNa1i3-0" : {
+    "firebaseKey" : "-MiBvQiWr6XNwNa1i3-0",
+    "title" : "CSS",
+    "category" : "Web",
+    "description": "CSS is a format for styling elements of HTML documents in manner such that they are cascading and stylin. This description needs to be a bit longer I think. That's better. Well what if I made it muuuuuuch loooooonger. Whhaaaaat migggghhht happppppen theeeeeennnnnn, hmmmmmmmmm?",
+    "date" : 1652134875,
+    "uid": ""
+  },
+  "-MiBw4tCvNZd23yTVDQw" : {
+    "firebaseKey" : "-MiBw4tCvNZd23yTVDQw",
+    "title" : "Swift",
+    "category" : "Mobile",
+    "description": "Swift is a programming language designed by Apple for use with their mobile and desktop systems. There was a time when it was all the rage, but Apple's star is not so ascendant these days.",
+    "date" : 1652134878,
+    "uid": ""
+  }
+}
