@@ -46,9 +46,7 @@ const domBuilder = () => {
   clearDom();
   renderToDom(navString, '#nav-bar');
   document.querySelector('#google-auth').addEventListener('click', signMeOut);
-
   const sampleArray = Object.values(sampleData);
-
   showWords(sampleArray);
 };
 
