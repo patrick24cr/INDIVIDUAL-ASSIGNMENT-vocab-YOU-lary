@@ -1,8 +1,7 @@
-import clearDom from '../helpers/clearDom';
 import renderToDOM from '../helpers/renderToDom';
 
 const showWords = (array) => {
-  clearDom();
+  renderToDOM('', '#words');
 
   let domString = '';
   array.forEach((item) => {
