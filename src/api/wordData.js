@@ -23,8 +23,37 @@ const getCategories = () => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
+const createWord = (wordObj) => new Promise((resolve, reject) => {
+  axios.post(`${dbUrl}/words.json`, wordObj)
+    .then((response) => {
+      const payload = { firebaseKey: response.data.name };
+      axios.patch(`${dbUrl}/words/${response.data.name}.json`, payload)
+        .then(() => {
+          getWords().then(resolve);
+        });
+    }).catch(reject);
+});
+
+const updateWord = (firebaseKey, wordObj) => new Promise((resolve, reject) => {
+  axios.patch(`${dbUrl}/words/${firebaseKey}.json`, wordObj)
+    .then(() => {
+      getWords().then(resolve);
+    }).catch(reject);
+});
+
+const deleteWord = (firebaseKey) => new Promise((resolve, reject) => {
+  axios.delete(`${dbUrl}/words/${firebaseKey}.json`)
+    .then(() => {
+      getWords().then((wordsArray) => resolve(wordsArray));
+    })
+    .catch((error) => reject(error));
+});
+
 export {
   getWords,
   getWord,
-  getCategories
+  getCategories,
+  createWord,
+  updateWord,
+  deleteWord
 };

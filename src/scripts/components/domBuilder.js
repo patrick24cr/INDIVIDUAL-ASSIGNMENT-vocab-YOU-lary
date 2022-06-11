@@ -24,16 +24,15 @@ const domBuilder = () => {
           Sort
         </a>
         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <li><a class="dropdown-item" href="#">Alphabetical</a></li>
+          <li><a class="dropdown-item" href="#" id="sort-alpha">Alphabetical</a></li>
           <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" href="#">Newest</a></li>
-          <li><a class="dropdown-item" href="#">Oldest</a></li>
+          <li><a class="dropdown-item" href="#" id="sort-new">Newest</a></li>
+          <li><a class="dropdown-item" href="#"id="sort-old">Oldest</a></li>
         </ul>
       </li>
     </ul>
     <form class="d-flex" role="search">
-      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-primary" type="submit">Search</button>
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="search">
     </form>
     <button id="google-auth" class="btn btn-outline-danger google-auth">Log Out</button>
   </div>

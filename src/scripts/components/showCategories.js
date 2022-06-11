@@ -5,7 +5,7 @@ const showCategories = (array) => {
   let filterString = '<button class="btn btn-outline-primary" id="filter--all">All</button>';
   array.forEach((item) => {
     filterString += `
-    <button class="btn btn-outline-primary" id="filter--${item}">${item}</button>
+    <button class="btn btn-outline-primary" id="filter-by--${item}">${item}</button>
     `;
   });
   renderToDOM(filterString, '#filters');
