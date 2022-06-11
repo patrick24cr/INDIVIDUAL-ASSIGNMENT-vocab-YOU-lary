@@ -1,15 +1,15 @@
 import renderToDom from '../helpers/renderToDom';
 import clearDom from '../helpers/clearDom';
-import signMeOut from '../helpers/signOut';
 import logo from '../../../images/logo.png';
 import { showWords } from './showWords';
-import sampleData from '../../../sample_data/words.json';
+import { getWords, getCategories } from '../../api/wordData';
+import { showCategories } from './showCategories';
 
 const domBuilder = () => {
   const navString = `<nav class="navbar navbar-dark bg-dark navbar-expand-lg bg-light">
 <div class="container-fluid">
   <a class="navbar-brand" href="#">
-  <img class="logo" src="${logo}" alt="" width="auto" height="40">
+  <img id="logo" class="logo" src="${logo}" alt="" width="auto" height="40">
   </a>
   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -17,10 +17,7 @@ const domBuilder = () => {
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
       <li class="nav-item">
-        <a class="nav-link" aria-current="page" href="#">Create Entry</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Add Category</a>
+        <a class="nav-link" aria-current="page" href='#' id="create-btn">Create Entry</a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -45,9 +42,8 @@ const domBuilder = () => {
 
   clearDom();
   renderToDom(navString, '#nav-bar');
-  document.querySelector('#google-auth').addEventListener('click', signMeOut);
-  const sampleArray = Object.values(sampleData);
-  showWords(sampleArray);
+  getCategories().then((categoryArray) => showCategories(categoryArray));
+  getWords().then((wordArray) => showWords(wordArray));
 };
 
 export default domBuilder;

@@ -15,9 +15,20 @@ body {
   margin: 0px 10px 0px 20px;
 }
 
+.filters {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+
+.filters > .btn {
+  margin: 10px 10px;
+}
+
 .words {
   display: flex;
   flex-flow: row wrap;
+  justify-content: center;
 }
 
 .card {
