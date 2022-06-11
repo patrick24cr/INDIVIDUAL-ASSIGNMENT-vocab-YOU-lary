@@ -9,11 +9,13 @@ const showWords = (array) => {
     <div class="card" id="${item.firebaseKey}" style="width: 18rem;">
     <div class="card-body">
       <h5 class="card-title">${item.title}</h5>
-      <hr>
       <h6 class="card-subtitle mb-2 text-muted">Category: ${item.category}</h6>
       <hr>
+      <div class="card-description">
       <p class="card-text" style="text-align: left;">${item.description}</p>
-      <div class="card-buttons" style="text-align: left;">
+      </div>
+      <hr>
+      <div class="card-buttons">
       <a href="#" id="edit--${item.firebaseKey}" class="card-link">Edit</a>
       <a href="#" id="delete--${item.firebaseKey}" class="card-link">Delete</a>
       </div>
