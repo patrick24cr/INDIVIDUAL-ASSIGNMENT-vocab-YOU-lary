@@ -1,9 +1,7 @@
 import renderToDom from '../helpers/renderToDom';
 import clearDom from '../helpers/clearDom';
 import logo from '../../../images/logo.png';
-import { showWords } from './showWords';
-import { getWords, getCategories } from '../../api/wordData';
-import { showCategories } from './showCategories';
+import defaultRender from './defaultRender';
 
 const domBuilder = (uid) => {
   clearDom();
@@ -57,8 +55,7 @@ const domBuilder = (uid) => {
 </div>
 </nav>`;
   renderToDom(navString, '#nav-bar');
-  getCategories(uid).then((categoryArray) => showCategories(categoryArray, uid));
-  getWords().then((wordArray) => showWords(wordArray, uid));
+  defaultRender(uid);
 };
 
 export default domBuilder;

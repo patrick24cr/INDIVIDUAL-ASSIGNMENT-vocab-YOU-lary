@@ -3,10 +3,39 @@ import firebaseConfig from './apiKeys';
 
 const dbUrl = firebaseConfig.databaseURL;
 
-const getWords = () => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/words.json`)
+// axios.get(`${dbUrl}/words.json?orderBy="uid"&equalTo=${uid}`)
+// axios.get(`${dbUrl}/words.json?orderBy="public"&equalTo=true`)
+
+// const getWords = () => new Promise((resolve, reject) => {
+//   axios.get(`${dbUrl}/words.json`)
+//     .then((response) => resolve(Object.values(response.data)))
+//     .catch((error) => reject(error));
+// });
+
+const getWordsbyUid = (uid) => new Promise((resolve, reject) => {
+  axios.get(`${dbUrl}/words.json?orderBy="uid"&equalTo="${uid}"`)
     .then((response) => resolve(Object.values(response.data)))
     .catch((error) => reject(error));
+});
+
+const getPublicWords = () => new Promise((resolve, reject) => {
+  axios.get(`${dbUrl}/words.json?orderBy="public"&equalTo=true`)
+    .then((response) => resolve(Object.values(response.data)))
+    .catch((error) => reject(error));
+});
+
+const getAccessibleWords = (uid) => new Promise((resolve, reject) => {
+  getWordsbyUid(uid)
+    .then((uidWords) => {
+      getPublicWords()
+        .then((publicWords) => {
+          const combinedArrays = Object.values(uidWords).concat(Object.values(publicWords));
+          const accessibleWords = combinedArrays.filter((value, index, self) => index === self.findIndex((t) => (
+            t.category === value.category && t.description === value.description && t.firebaseKey === value.firebaseKey && t.public === value.public && t.title === value.title && t.uid === value.uid
+          )));
+          resolve(accessibleWords);
+        });
+    }).catch((error) => reject(error));
 });
 
 const getWord = (firebaseKey) => new Promise((resolve, reject) => {
@@ -23,34 +52,34 @@ const getCategories = (uid) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
-const createWord = (wordObj) => new Promise((resolve, reject) => {
+const createWord = (wordObj, uid) => new Promise((resolve, reject) => {
   axios.post(`${dbUrl}/words.json`, wordObj)
     .then((response) => {
       const payload = { firebaseKey: response.data.name };
       axios.patch(`${dbUrl}/words/${response.data.name}.json`, payload)
         .then(() => {
-          getWords().then(resolve);
+          getAccessibleWords(uid).then(resolve);
         });
     }).catch(reject);
 });
 
-const updateWord = (firebaseKey, wordObj) => new Promise((resolve, reject) => {
+const updateWord = (firebaseKey, wordObj, uid) => new Promise((resolve, reject) => {
   axios.patch(`${dbUrl}/words/${firebaseKey}.json`, wordObj)
     .then(() => {
-      getWords().then(resolve);
+      getAccessibleWords(uid).then(resolve);
     }).catch(reject);
 });
 
-const deleteWord = (firebaseKey) => new Promise((resolve, reject) => {
+const deleteWord = (firebaseKey, uid) => new Promise((resolve, reject) => {
   axios.delete(`${dbUrl}/words/${firebaseKey}.json`)
     .then(() => {
-      getWords().then((wordsArray) => resolve(wordsArray));
+      getAccessibleWords(uid).then((wordsArray) => resolve(wordsArray));
     })
     .catch((error) => reject(error));
 });
 
 export {
-  getWords,
+  getAccessibleWords,
   getWord,
   getCategories,
   createWord,

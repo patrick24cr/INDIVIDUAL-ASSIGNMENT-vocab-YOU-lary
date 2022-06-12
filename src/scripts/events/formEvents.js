@@ -1,9 +1,6 @@
-import { createWord, updateWord, getCategories } from '../../api/wordData';
-import { showWords } from '../components/showWords';
-import { showCategories } from '../components/showCategories';
+import { createWord, updateWord } from '../../api/wordData';
 import renderToDom from '../helpers/renderToDom';
-// import sampleData from '../../../sample_data/words.json';
-// const sampleObject = Object.values(sampleData)[0];
+import defaultRender from '../components/defaultRender';
 
 const domEvents = (uid) => {
   document.querySelector('#main').addEventListener('submit', (e) => {
@@ -17,9 +14,8 @@ const domEvents = (uid) => {
         public: document.querySelector('#public-check').checked,
         uid,
       };
-      createWord(wordObject).then((wordArray) => {
-        showWords(wordArray, uid);
-        getCategories(uid).then((categoryArray) => showCategories(categoryArray, uid));
+      createWord(wordObject, uid).then(() => {
+        defaultRender(uid);
       });
     }
     if (e.target.id.includes('update-word')) {
@@ -31,9 +27,8 @@ const domEvents = (uid) => {
         public: document.querySelector('#public-check').checked,
         uid
       };
-      updateWord(firebaseKey, wordObject).then((wordsArray) => {
-        showWords(wordsArray, uid);
-        getCategories(uid).then((categoryArray) => showCategories(categoryArray, uid));
+      updateWord(firebaseKey, wordObject, uid).then(() => {
+        defaultRender(uid);
       });
     }
     if (e.target.id.includes('copy-word')) {
@@ -42,11 +37,11 @@ const domEvents = (uid) => {
         category: (document.querySelector('#category2') ? document.querySelector('#category2').value : document.querySelector('#category').value),
         description: document.querySelector('#description').value,
         public: document.querySelector('#public-check').checked,
+        date: Math.round(Date.now() / 1000),
         uid
       };
-      createWord(wordObject).then((wordsArray) => {
-        showWords(wordsArray, uid);
-        getCategories(uid).then((categoryArray) => showCategories(categoryArray, uid));
+      createWord(wordObject, uid).then(() => {
+        defaultRender(uid);
       });
     }
   });

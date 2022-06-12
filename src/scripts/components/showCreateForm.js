@@ -30,7 +30,6 @@ const createForm = (obj = {}, uid, copy) => {
 
   renderToDOM(domString, '#words');
   if (copy) {
-    console.warn('copy is happening');
     if (document.querySelector(`#update-word--${obj.firebaseKey}`)) {
       document.querySelector(`#update-word--${obj.firebaseKey}`).id = 'copy-word';
     }
