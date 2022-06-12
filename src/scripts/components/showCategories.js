@@ -1,9 +1,14 @@
 import renderToDOM from '../helpers/renderToDom';
 
-const showCategories = (array) => {
+const showCategories = (array, uid) => {
   renderToDOM('', '#filters');
   let filterString = '<button class="btn btn-outline-primary" id="filter-by--all">All</button>';
-  array.forEach((item) => {
+  let arrayCopy = array;
+  if (document.querySelector('#community-status').innerText.includes('hidden')) {
+    arrayCopy = array.filter((x) => x.uid === uid);
+  }
+  const uniqueCategories = [...new Set(arrayCopy.map((x) => x.category))].sort();
+  uniqueCategories.forEach((item) => {
     filterString += `
     <button class="btn btn-outline-primary" id="filter-by--${item}">${item}</button>
     `;

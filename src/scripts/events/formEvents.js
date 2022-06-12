@@ -5,20 +5,21 @@ import renderToDom from '../helpers/renderToDom';
 // import sampleData from '../../../sample_data/words.json';
 // const sampleObject = Object.values(sampleData)[0];
 
-const domEvents = () => {
+const domEvents = (uid) => {
   document.querySelector('#main').addEventListener('submit', (e) => {
     e.preventDefault();
-
     if (e.target.id.includes('submit-word')) {
       const wordObject = {
         title: document.querySelector('#title').value,
         category: (document.querySelector('#category2') ? document.querySelector('#category2').value : document.querySelector('#category').value),
         description: document.querySelector('#description').value,
         date: Math.round(Date.now() / 1000),
+        public: document.querySelector('#public-check').checked,
+        uid,
       };
       createWord(wordObject).then((wordArray) => {
-        showWords(wordArray);
-        getCategories().then((categoryArray) => showCategories(categoryArray));
+        showWords(wordArray, uid);
+        getCategories(uid).then((categoryArray) => showCategories(categoryArray, uid));
       });
     }
     if (e.target.id.includes('update-word')) {
@@ -27,15 +28,29 @@ const domEvents = () => {
         title: document.querySelector('#title').value,
         category: (document.querySelector('#category2') ? document.querySelector('#category2').value : document.querySelector('#category').value),
         description: document.querySelector('#description').value,
+        public: document.querySelector('#public-check').checked,
+        uid
       };
       updateWord(firebaseKey, wordObject).then((wordsArray) => {
-        showWords(wordsArray);
-        getCategories().then((categoryArray) => showCategories(categoryArray));
+        showWords(wordsArray, uid);
+        getCategories(uid).then((categoryArray) => showCategories(categoryArray, uid));
+      });
+    }
+    if (e.target.id.includes('copy-word')) {
+      const wordObject = {
+        title: document.querySelector('#title').value,
+        category: (document.querySelector('#category2') ? document.querySelector('#category2').value : document.querySelector('#category').value),
+        description: document.querySelector('#description').value,
+        public: document.querySelector('#public-check').checked,
+        uid
+      };
+      createWord(wordObject).then((wordsArray) => {
+        showWords(wordsArray, uid);
+        getCategories(uid).then((categoryArray) => showCategories(categoryArray, uid));
       });
     }
   });
   document.querySelector('#main').addEventListener('change', (e) => {
-    console.warn(e.target.id);
     if (e.target.id === 'category') {
       if (document.querySelector('#category').value === 'new') {
         const newCategoryInputString = '<input type="text" class="form-control" id="category2" aria-describedby="bookTitle" placeholder="Enter new category here" required>';
