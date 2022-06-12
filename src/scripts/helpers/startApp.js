@@ -4,12 +4,10 @@ import domEvents from '../events/domEvents';
 import formEvents from '../events/formEvents';
 
 const startApp = (user) => {
-  domBuilder(user);
-  domEvents();
-  navigationEvents();
-  formEvents();
-  // logoutButton();
-  // do something for the dom
+  domBuilder(user.uid);
+  domEvents(user.uid);
+  navigationEvents(user.uid);
+  formEvents(user.uid);
 };
 
 export default startApp;

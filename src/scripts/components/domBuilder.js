@@ -5,7 +5,18 @@ import { showWords } from './showWords';
 import { getWords, getCategories } from '../../api/wordData';
 import { showCategories } from './showCategories';
 
-const domBuilder = () => {
+const domBuilder = (uid) => {
+  clearDom();
+
+  const skeletonString = `<div id="login-form-container"></div>
+  <div id="nav-bar"></div>
+  <div id="main">
+  <div id="filters" class="filters"></div>
+  <div id="words" class="words"></div>
+  </div>`;
+
+  renderToDom(skeletonString, '#app');
+
   const navString = `<nav class="navbar navbar-dark bg-dark navbar-expand-lg bg-light">
 <div class="container-fluid">
   <a class="navbar-brand" href="#">
@@ -21,13 +32,20 @@ const domBuilder = () => {
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Sort
+          Sort Words
         </a>
         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
           <li><a class="dropdown-item" href="#" id="sort-alpha">Alphabetical</a></li>
           <li><hr class="dropdown-divider"></li>
           <li><a class="dropdown-item" href="#" id="sort-new">Newest</a></li>
           <li><a class="dropdown-item" href="#"id="sort-old">Oldest</a></li>
+        </ul>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" id="community-status" data-bs-toggle="dropdown" aria-expanded="false">
+          Community Words: visible</a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <li><a class="dropdown-item" href="#" id="community-toggle">Hide</a></li>
         </ul>
       </li>
     </ul>
@@ -38,11 +56,9 @@ const domBuilder = () => {
   </div>
 </div>
 </nav>`;
-
-  clearDom();
   renderToDom(navString, '#nav-bar');
-  getCategories().then((categoryArray) => showCategories(categoryArray));
-  getWords().then((wordArray) => showWords(wordArray));
+  getCategories(uid).then((categoryArray) => showCategories(categoryArray, uid));
+  getWords().then((wordArray) => showWords(wordArray, uid));
 };
 
 export default domBuilder;

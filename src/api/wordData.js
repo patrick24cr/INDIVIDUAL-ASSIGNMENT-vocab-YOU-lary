@@ -15,10 +15,10 @@ const getWord = (firebaseKey) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
-const getCategories = () => new Promise((resolve, reject) => {
+const getCategories = (uid) => new Promise((resolve, reject) => {
   axios.get(`${dbUrl}/words.json`)
     .then((response) => {
-      resolve([...new Set(Object.values(response.data).map((x) => x.category))]);
+      resolve(Object.values(response.data).filter((x) => x.public === true || x.uid === uid));
     })
     .catch((error) => reject(error));
 });
